@@ -65,8 +65,9 @@
   (let* ((type (if (smart-terminal-p)
                    'smart-editor
                    'dumb-editor))
+         (quiet (when (getf args :quiet) (remf args :quiet)))
          (spec (list *version* type)))
-    (unless (equal *announced* spec)
+    (unless (or quiet (equal *announced* spec))
       (format t "~&Linedit version ~A [~A mode]~%"
               *version*
               (if (eq 'smart-editor type)
